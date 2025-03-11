@@ -1,0 +1,89 @@
+2024最新Pytorch安装图文教程(Anaconda+GPU)
+ 更新时间：2024年11月13日 09:27:27   作者：多想和从前一样  
+本文详细介绍了如何使用Anaconda创建虚拟环境,并在该环境中安装CUDA和cuDNN,最后安装支持GPU的PyTorch,本文通过图文并茂的形式给大家介绍的非常详细,感兴趣的朋友一起看看吧
+
+一、Anaconda创建虚拟环境
+
+二、CUDA安装
+
+1.查看本地显卡驱动对应CUDA版本号 首先找到NVIDIA控制面板
+
+
+点击左下角系统信息：
+
+点击组件：
+
+选择适合自己电脑的cuda版本，比上图所支持的CUDA 版本低都行！
+
+
+2.官网下载：
+CUDA Toolkit Archive | NVIDIA Developer
+
+双击下载后的exe文件：
+
+
+由于我的电脑没有Visual Studio，所以我选择自定义安装取消该选项。本人是初学，具体有什么影响暂时还不清楚，不过目前位置没有影响使用。
+
+
+
+3.查看系统环境变量
+
+4.测试CUDA是否安装成功
+
+三、CUDNN安装
+cuDNN Archive | NVIDIA Developer
+
+
+
+有的时候好像不需要创建账户就能下载。
+
+
+在cudnn压缩包下载路径，首先解压压缩包，提高用户使用这三个文件夹的权限：
+
+
+将这三个文件复制到CUDA的安装目录下
+
+
+
+
+四、Pytorch安装
+打开Anaconda终端
+
+
+切换到上面创建的虚拟环境DeepLearning为最开始你创建的虚拟环境名称。
+
+conda activate DeepLearning
+
+安装：
+
+conda install pytorch torchvision torchaudio pytorch-cuda= -c pytorch -c nvidia
+
+遇到问题：conda安装成了cpu版本
+
+Conda list
+
+
+可以看到，只能找到cpu版的。
+
+
+所以卸载掉CPU版本的Pytorch包，用命令：conda uninstall pytorch
+
+添加镜像：
+
+添加完镜像后，可以找到GPU版的pytorch：
+​conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/
+
+重新在官网https://pytorch.org/get-started/previous-versions/中找历史版本pytorch的下载命令：
+
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
+可去掉版本号默认安装最新。
+
+验证：GPU版本安装成功
+import  torch
+print(torch.__version__)
+print(torch.cuda.is_available())
+
+到此这篇关于2024最新Pytorch安装教程（Anaconda+GPU）的文章就介绍到这了,更多相关Pytorch安装内容请搜索脚本之家以前的文章或继续浏览下面的相关文章希望大家以后多多支持脚本之家！
